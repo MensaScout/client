@@ -13,7 +13,7 @@ struct DailyOfferView: View {
         Meal(
             name: "Trüffel Tagliatelle",
             description: "Hausgemachte Pasta mit frischem Trüffel und Sahnesauce.",
-            type: .vegetarian,
+            nutrientProperties: [.vegetarian, .green_choice],
             category: "Classic Flavour",
             allergens: ["Gluten", "Milch"],
             prices: MealPrices(student: 7.50, staff: 9.00, external: 11.00),
@@ -24,7 +24,7 @@ struct DailyOfferView: View {
         Meal(
             name: "Falafel Bowl",
             description: "Kichererbsen, Quinoa und frische Kräuter, serviert mit Tahini-Dressing.",
-            type: .vegan,
+            nutrientProperties: [.vegan],
             category: "Plants & More",
             allergens: ["Sesam", "Soja"],
             prices: MealPrices(student: 7.00, staff: 8.50, external: 10.50),

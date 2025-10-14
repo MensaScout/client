@@ -52,14 +52,14 @@ struct MealDetailView: View {
                     .padding(.horizontal)
 
                 // Typ (Vegan, etc.)
-                HStack(spacing: 10) {
-                    Text(meal.type.symbol)
-                        .font(.title3)
-                    Text(meal.type.rawValue)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Nährstoffeigenschaften")
                         .font(.headline)
-                        .foregroundStyle(meal.type.color)
-                }
-                .padding(.horizontal)
+                    
+                    Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }.padding(.horizontal)
 
                 // Allergene
                 if !meal.allergens.isEmpty {
@@ -144,7 +144,7 @@ struct MealDetailView: View {
     MealDetailView(meal: Meal(
         name: "Falafel Bowl",
         description: "Kichererbsen, Quinoa und frische Kräuter, serviert mit Tahini-Dressing.",
-        type: .vegan,
+        nutrientProperties: [.vegan],
         category: "Plants & More",
         allergens: ["Sesam", "Soja"],
         prices: MealPrices(student: 7.00, staff: 8.50, external: 10.50),

@@ -8,27 +8,68 @@
 import Foundation
 import SwiftUI
 
-enum MealType: String {
-    case meat = "meat"
-    case vegetarian = "vegetarian"
-    case vegan = "vegan"
+enum NutrientProperties: String {
+    case beef, poultry, veal, green_choice, low_co2, low_gluten, low_lactose, pork, seafood, fish, vegan, vegetarian, spicy
     
-    var symbol: String {
+    var assetName: String {
         switch self {
-        case .meat:
-            return "🍖"
-        case .vegetarian:
-            return "🥗"
-        case .vegan:
-            return "🥬"
+            case .beef:
+                return "beef"
+            case .poultry:
+                return "poultry"
+            case .veal:
+                return "veal"
+            case .green_choice:
+                return "green_choice"
+            case .low_co2:
+                return "low_co2"
+            case .low_gluten:
+                return "low_gluten"
+            case .low_lactose:
+                return "low_lactose"
+            case .pork:
+                return "pork"
+            case .seafood:
+                return "seafood"
+            case .fish:
+                return "fish"
+            case .vegan:
+                return "vegan"
+            case .vegetarian:
+                return "vegetarian"
+            case .spicy:
+                return "spicy"
         }
     }
     
-    var color: Color {
+    var asString: String {
         switch self {
-            case .meat: return .red
-            case .vegetarian: return .green
-            case .vegan: return .mint
+            case .beef:
+                return "Beef"
+            case .poultry:
+                return "Poultry"
+            case .veal:
+                return "Veal"
+            case .green_choice:
+                return "Green choice"
+            case .low_co2:
+                return "Climate friendly"
+            case .low_gluten:
+                return "Low gluten"
+            case .low_lactose:
+                return "Low lactose"
+            case .pork:
+                return "Pork"
+            case .seafood:
+                return "Seafood"
+            case .fish:
+                return "Fish"
+            case .vegan:
+                return "Vegan"
+            case .vegetarian:
+                return "Vegetarian"
+            case .spicy:
+                return "Spicy"
         }
     }
 }
@@ -43,7 +84,7 @@ struct Meal: Identifiable {
     let id = UUID()
     let name: String
     let description: String
-    let type: MealType
+    let nutrientProperties: [NutrientProperties]
     let category: String?
     let allergens: [String]
     let prices: MealPrices

@@ -29,9 +29,15 @@ struct MealCardView: View {
                         .font(.headline)
                         .foregroundStyle(.primary)
                     Spacer()
-                    Text(meal.type.symbol)
-                        .font(.title2)
-                        .padding(.trailing, 4)
+                    HStack(spacing: 8) {
+                        ForEach(meal.nutrientProperties, id: \.self) { property in
+                            Image(property.assetName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .accessibilityLabel(property.asString)
+                        }
+                    }
                 }
 
                 Text(meal.description)
@@ -68,7 +74,7 @@ struct MealCardView: View {
     MealCardView(meal: Meal(
         name: "Trüffel Tagliatelle",
         description: "Hausgemachte Pasta mit frischem Trüffel, Parmesan und Sahnesauce.",
-        type: .vegetarian,
+        nutrientProperties: [.beef],
         category: "Pasta of the Day",
         allergens: ["Gluten", "Dairy"],
         prices: MealPrices(student: 4.50, staff: 6.50, external: 10.70),
