@@ -9,15 +9,26 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            NavigationStack {
+                DailyOfferView()
+                    .navigationTitle("Tagesangebot")
+            }
+            .tabItem {
+                Label("Tagesangebot", systemImage: "sun.max.fill")
+            }
+
+            NavigationStack {
+                SettingsView()
+                    .navigationTitle("Einstellungen")
+            }
+            .tabItem {
+                Label("Einstellungen", systemImage: "gearshape.fill")
+            }
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
