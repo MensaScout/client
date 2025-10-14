@@ -44,7 +44,7 @@ struct MealCardView: View {
 
             // Preis & Ort
             HStack {
-                Label(String(format: "%.2f CHF", meal.priceCHF), systemImage: "banknote")
+                Text(String(format: "%.2f CHF", meal.prices.student))
                     .font(.subheadline)
                     .foregroundStyle(.primary)
 
@@ -69,9 +69,11 @@ struct MealCardView: View {
         name: "Trüffel Tagliatelle",
         description: "Hausgemachte Pasta mit frischem Trüffel, Parmesan und Sahnesauce.",
         type: .vegetarian,
-        priceCHF: 7.50,
+        category: "Pasta of the Day",
+        allergens: ["Gluten", "Dairy"],
+        prices: MealPrices(student: 4.50, staff: 6.50, external: 10.70),
         location: "Mensa Biozentrum",
-        imageName: "pasta"
+        imageName: "pasta",
+        websiteURL: URL(string: "https://clients.compass-group.ch/unibas-biozentrum/en/BaCells")
     ))
-    .preferredColorScheme(.light)
 }

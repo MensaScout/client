@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct MealDetailView: View {
     let meal: Meal
     @Environment(\.dismiss) private var dismiss
@@ -140,6 +138,7 @@ struct MealDetailView: View {
         meal.imageName != nil
     }
 }
+
 
 #Preview {
     MealDetailView(meal: Meal(

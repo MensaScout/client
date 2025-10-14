@@ -33,12 +33,21 @@ enum MealType: String {
     }
 }
 
+struct MealPrices {
+    let student: Double
+    let staff: Double
+    let external: Double
+}
+
 struct Meal: Identifiable {
     let id = UUID()
     let name: String
     let description: String
     let type: MealType
-    let priceCHF: Double
+    let category: String?
+    let allergens: [String]
+    let prices: MealPrices
     let location: String
     let imageName: String?
+    let websiteURL: URL?
 }
