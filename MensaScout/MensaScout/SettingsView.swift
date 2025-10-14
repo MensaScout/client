@@ -21,7 +21,19 @@ struct SettingsView: View {
                     .foregroundStyle(.secondary)
             }
             
-            Text("Made with love by Lars Winzer")
+            NavigationLink("Special Thanks & Attributions") {
+                Form {
+                    Section(header: Text("Credits")) {
+                        Link("OpenMoji", destination: URL(string: "https://openmoji.org/")!)
+                    }
+                    
+                    Section(header: Text("Contributors")) {
+                        Link("Lars Winzer", destination: URL(string: "https://github.com/official-Cromatin")!)
+                    }
+                    
+                    Link("Repository (GitHub)", destination: URL(string: "https://github.com/official-Cromatin/Mensa-Scout")!)
+                }
+            }
         }
         .navigationTitle("Einstellungen")
     }
