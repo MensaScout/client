@@ -51,7 +51,9 @@ struct MealDetailView: View {
                     .foregroundStyle(.primary)
                     .padding(.horizontal)
 
+
                 // Typ (Vegan, etc.)
+if !meal.nutrientProperties.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Nährstoffeigenschaften")
                         .font(.headline)
@@ -59,7 +61,9 @@ struct MealDetailView: View {
                     Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                }.padding(.horizontal)
+                }
+.padding(.horizontal)
+}
 
                 // Allergene
                 if !meal.allergens.isEmpty {
