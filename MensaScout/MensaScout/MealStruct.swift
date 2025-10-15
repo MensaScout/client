@@ -91,4 +91,26 @@ struct Meal: Identifiable {
     let location: String
     let imageName: String?
     let websiteURL: URL?
+    
+    init(
+        name: String,
+        description: String,
+        nutrientProperties: [NutrientProperties],
+        category: String?,
+        allergens: [String],
+        prices: MealPrices,
+        location: String,
+        imageName: String? = nil,
+        websiteURL: URL?
+    ) {
+        self.name = name
+        self.description = description
+        self.nutrientProperties = nutrientProperties
+        self.category = category
+        self.allergens = allergens
+        self.prices = prices
+        self.location = location
+        self.imageName = imageName
+        self.websiteURL = websiteURL
+    }
 }
