@@ -14,8 +14,7 @@ struct MealDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-
-                // Bild oben
+                // Thumbnail
                 if let imageName = meal.imageName {
                     Image(imageName)
                         .resizable()
@@ -27,7 +26,7 @@ struct MealDetailView: View {
                         .padding(.horizontal)
                 }
 
-                // Titel + Kategorie
+                // Title + Category
                 VStack(alignment: .leading, spacing: 6) {
                     Text(meal.name)
                         .font(.largeTitle.bold())
@@ -45,14 +44,13 @@ struct MealDetailView: View {
                 Divider()
                     .padding(.horizontal)
 
-                // Beschreibung
+                // Description
                 Text(meal.description)
                     .font(.body)
                     .foregroundStyle(.primary)
                     .padding(.horizontal)
 
-
-                // Typ (Vegan, etc.)
+                // Nutritional properties
 if !meal.nutrientProperties.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Nährstoffeigenschaften")
@@ -65,7 +63,7 @@ if !meal.nutrientProperties.isEmpty {
 .padding(.horizontal)
 }
 
-                // Allergene
+                // Allergens
                 if !meal.allergens.isEmpty {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Allergene")
@@ -77,7 +75,7 @@ if !meal.nutrientProperties.isEmpty {
                     .padding(.horizontal)
                 }
 
-                // Preise
+                // Price
                 VStack(alignment: .leading, spacing: 6) {
                     Text("Preise")
                         .font(.headline)
@@ -99,7 +97,7 @@ if !meal.nutrientProperties.isEmpty {
                 }
                 .padding(.horizontal)
 
-                // Ort
+                // Mensa location
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
                     Text(meal.location)
@@ -108,7 +106,7 @@ if !meal.nutrientProperties.isEmpty {
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
 
-                // Website-Button
+                // Button to website
                 if let url = meal.websiteURL {
                     Link(destination: url) {
                         Text("Zur Webseite")
