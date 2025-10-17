@@ -57,7 +57,7 @@ if !meal.nutrientProperties.isEmpty {
                         .font(.headline)
                     
                     Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
-                        .font(.subheadline)
+                            .font(.body)
                         .foregroundStyle(.secondary)
                 }
 .padding(.horizontal)
@@ -69,7 +69,7 @@ if !meal.nutrientProperties.isEmpty {
                         Text("Allergene")
                             .font(.headline)
                         Text(meal.allergens.joined(separator: ", "))
-                            .font(.subheadline)
+                            .font(.body)
                             .foregroundStyle(.secondary)
                     }
                     .padding(.horizontal)
