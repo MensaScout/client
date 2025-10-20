@@ -91,6 +91,7 @@ struct Meal: Identifiable {
     let location: String
     let imageName: String?
     let websiteURL: URL?
+    let openingHours: DateInterval
     
     init(
         name: String,
@@ -101,7 +102,8 @@ struct Meal: Identifiable {
         prices: MealPrices,
         location: String,
         imageName: String? = nil,
-        websiteURL: URL?
+        websiteURL: URL?,
+        openingHours: DateInterval
     ) {
         self.name = name
         self.description = description
@@ -112,5 +114,6 @@ struct Meal: Identifiable {
         self.location = location
         self.imageName = imageName
         self.websiteURL = websiteURL
+        self.openingHours = openingHours
     }
 }

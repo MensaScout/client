@@ -43,7 +43,7 @@ struct MealDetailView: View {
 
                 Divider()
                     .padding(.horizontal)
-
+                
                 // Description
                 Text(meal.description)
                     .font(.body)
@@ -51,17 +51,17 @@ struct MealDetailView: View {
                     .padding(.horizontal)
 
                 // Nutritional properties
-if !meal.nutrientProperties.isEmpty {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Nährstoffeigenschaften")
-                        .font(.headline)
-                    
-                    Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
+                if !meal.nutrientProperties.isEmpty {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Nährstoffeigenschaften")
+                            .font(.headline)
+                        
+                        Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
                             .font(.body)
-                        .foregroundStyle(.secondary)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal)
                 }
-.padding(.horizontal)
-}
 
                 // Allergens
                 if !meal.allergens.isEmpty {
@@ -105,6 +105,26 @@ if !meal.nutrientProperties.isEmpty {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .padding(.horizontal)
+                
+                // Opening hours
+                HStack {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Image(systemName: "clock")
+                            Text(openingHoursText)
+                        }
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .trailing) {
+                        Text(openingHoursStatus)
+                    }
+                    .padding(.horizontal)
+                }
 
                 // Button to website
                 if let url = meal.websiteURL {
@@ -139,11 +159,60 @@ if !meal.nutrientProperties.isEmpty {
     private var imageNameExists: Bool {
         meal.imageName != nil
     }
+    
+    private var openingHoursText: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        
+        let start = formatter.string(from: meal.openingHours.start)
+        let end = formatter.string(from: meal.openingHours.end)
+        
+        return "\(start) - \(end) Uhr"
+    }
+    
+    private var openingHoursStatus: String {
+        let now = Date()
+        let openingHours = meal.openingHours
+        
+        if openingHours.contains(now) {
+            let timeRemaining = openingHours.end.timeIntervalSince(now)
+            if timeRemaining < 15 * 60 {
+                return "schließt bald"
+            } else {
+                return "geöffnet"
+            }
+        } else if now < openingHours.start {
+            let timeUntilOpen = openingHours.start.timeIntervalSince(now)
+            if timeUntilOpen < 15 * 60 {
+                return "öffnet bald"
+            } else {
+                return "geschlossen"
+            }
+        } else {
+            return "geschlossen"
+        }
+    }
 }
 
 
 #Preview {
-    MealDetailView(meal: Meal(
+    let calendar = Calendar.current
+    let today = Date()
+
+    var startComponents = calendar.dateComponents([.year, .month, .day], from: today)
+    startComponents.hour = 14
+    startComponents.minute = 00
+
+    var endComponents = startComponents
+    endComponents.hour = 15
+    endComponents.minute = 00
+
+    let startDate = calendar.date(from: startComponents)!
+    let endDate = calendar.date(from: endComponents)!
+
+    let interval = DateInterval(start: startDate, end: endDate)
+    
+    return MealDetailView(meal: Meal(
         name: "Falafel Bowl",
         description: "Kichererbsen, Quinoa und frische Kräuter, serviert mit Tahini-Dressing.",
         nutrientProperties: [.vegan],
@@ -151,7 +220,8 @@ if !meal.nutrientProperties.isEmpty {
         allergens: ["Sesam", "Soja"],
         prices: MealPrices(student: 7.00, staff: 8.50, external: 10.50),
         location: "Uni Café",
-        imageName: "falafel",
-        websiteURL: URL(string: "https://www.mensa.unibas.ch")
+        imageName: nil,
+        websiteURL: URL(string: "https://www.mensa.unibas.ch"),
+        openingHours: interval
     ))
 }
