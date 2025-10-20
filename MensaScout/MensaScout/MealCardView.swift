@@ -71,7 +71,23 @@ struct MealCardView: View {
 
 
 #Preview {
-    MealCardView(meal: Meal(
+    let calendar = Calendar.current
+    let today = Date()
+
+    var startComponents = calendar.dateComponents([.year, .month, .day], from: today)
+    startComponents.hour = 11
+    startComponents.minute = 30
+
+    var endComponents = startComponents
+    endComponents.hour = 13
+    endComponents.minute = 30
+
+    let startDate = calendar.date(from: startComponents)!
+    let endDate = calendar.date(from: endComponents)!
+
+    let interval = DateInterval(start: startDate, end: endDate)
+    
+    return MealCardView(meal: Meal(
         name: "Trüffel Tagliatelle",
         description: "Hausgemachte Pasta mit frischem Trüffel, Parmesan und Sahnesauce.",
         nutrientProperties: [.beef],
@@ -80,6 +96,7 @@ struct MealCardView: View {
         prices: MealPrices(student: 4.50, staff: 6.50, external: 10.70),
         location: "Mensa Biozentrum",
         imageName: "pasta",
-        websiteURL: URL(string: "https://clients.compass-group.ch/unibas-biozentrum/en/BaCells")
+        websiteURL: URL(string: "https://clients.compass-group.ch/unibas-biozentrum/en/BaCells"),
+        openingHours: interval
     ))
 }
