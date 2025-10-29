@@ -8,6 +8,7 @@
 import XCTest
 @testable import MensaScout
 
+@MainActor
 final class MealDetailViewModelTests: XCTestCase {
     private var sampleMeal: Meal!
     private var viewModel: MealDetailViewModel!
@@ -15,7 +16,7 @@ final class MealDetailViewModelTests: XCTestCase {
     override func setUp() async throws {
         let now = Date()
         
-        sampleMeal = await Meal(
+        sampleMeal = Meal(
             name: "Tortellini mit Rindfleisch",
             description: "Rindfleisch / Gemüsesauce / Schnittlauch / Menüsalat",
             nutrientProperties: [.beef],
@@ -38,25 +39,21 @@ final class MealDetailViewModelTests: XCTestCase {
         sampleMeal = nil
     }
     
-    @MainActor
     func testNutrientPropertiesText() {
         XCTAssertEqual(viewModel.nutrientPropertiesText, "Beef")
     }
     
-    @MainActor
     func testAllergensText() {
         XCTAssertEqual(viewModel.allergensText, "Gluten, Ei, Sellerie, Senf, Sulfite")
     }
     
-    @MainActor
     func testPricesTextFormatting() {
         let prices = viewModel.pricesText
         XCTAssertEqual(prices.count, 3)
         XCTAssertEqual(prices.first?.0, "Studierende")
         XCTAssertEqual(prices.first?.1, "9.50 CHF")
     }
-    
-    @MainActor
+
     func testOpeningHoursFormatting() {
         let text = viewModel.openingHoursText
         
@@ -69,7 +66,6 @@ final class MealDetailViewModelTests: XCTestCase {
         XCTAssertNotNil(match, "Opening hours text format is invalid: \(text)")
     }
     
-    @MainActor
     func testOpeningHoursStatusVariants() async {
         let now = Date()
         let cases: [(DateInterval, String)] = [
