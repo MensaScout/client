@@ -32,11 +32,6 @@ final class MealDetailViewModelTests: XCTestCase {
         viewModel = MealDetailViewModel(meal: sampleMeal)
     }
     
-    override func tearDown() {
-        viewModel = nil
-        sampleMeal = nil
-    }
-    
     func testNutrientPropertiesText() {
         XCTAssertEqual(viewModel.nutrientPropertiesText, "Beef")
     }

@@ -32,11 +32,6 @@ final class MealCardViewModelTests: XCTestCase {
         viewModel = MealCardViewModel(meal: sampleMeal)
     }
     
-    override func tearDown() {
-        viewModel = nil
-        sampleMeal = nil
-    }
-    
     func testImageName() {
         XCTAssertEqual(viewModel.imageName, "tortellini")
     }
