@@ -29,9 +29,7 @@ final class MealDetailViewModelTests: XCTestCase {
             openingHours: DateInterval(start: now, end: now)
         )
         
-        viewModel = await MainActor.run {
-            MealDetailViewModel(meal: sampleMeal)
-        }
+        viewModel = MealDetailViewModel(meal: sampleMeal)
     }
     
     override func tearDown() {
