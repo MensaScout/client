@@ -1,21 +1,14 @@
-//
-//  MealDetailView.swift
-//  MensaScout
-//
-//  Created by Lars Winzer on 14.10.25.
-//
-
 import SwiftUI
 
 struct MealDetailView: View {
-    let meal: Meal
     @Environment(\.dismiss) private var dismiss
+    @StateObject var viewModel: MealDetailViewModel
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Thumbnail
-                if let imageName = meal.imageName {
+                if let imageName = viewModel.imageName {
                     Image(imageName)
                         .resizable()
                         .scaledToFill()
@@ -28,35 +21,35 @@ struct MealDetailView: View {
 
                 // Title + Category
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(meal.name)
+                    Text(viewModel.title)
                         .font(.largeTitle.bold())
                         .padding(.horizontal)
 
-                    if let category = meal.category {
+                    if let category = viewModel.category {
                         Text(category)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal)
                     }
                 }
-                .padding(.top, imageNameExists ? 0 : 20)
+                .padding(.top, viewModel.imageExists ? 0 : 20)
 
                 Divider()
                     .padding(.horizontal)
                 
                 // Description
-                Text(meal.description)
+                Text(viewModel.description)
                     .font(.body)
                     .foregroundStyle(.primary)
                     .padding(.horizontal)
 
-                // Nutritional properties
-                if !meal.nutrientProperties.isEmpty {
+                // Nutrient properties
+                if let nutrientPropertiesText = viewModel.nutrientPropertiesText {
                     VStack(alignment: .leading, spacing: 6) {
                         Text("Nährstoffeigenschaften")
                             .font(.headline)
                         
-                        Text(meal.nutrientProperties.map { $0.asString }.joined(separator: ", "))
+                        Text(nutrientPropertiesText)
                             .font(.body)
                             .foregroundStyle(.secondary)
                     }
@@ -64,11 +57,11 @@ struct MealDetailView: View {
                 }
 
                 // Allergens
-                if !meal.allergens.isEmpty {
+                if let allergensText = viewModel.allergensText {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Allergene")
                             .font(.headline)
-                        Text(meal.allergens.joined(separator: ", "))
+                        Text(allergensText)
                             .font(.body)
                             .foregroundStyle(.secondary)
                     }
@@ -81,18 +74,17 @@ struct MealDetailView: View {
                         .font(.headline)
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Studierende:")
-                            Text("Angestellte:")
-                            Text("Externe:")
+                            ForEach(viewModel.pricesText, id: \.0) { row in
+                                Text("\(row.0):")
+                                    .foregroundStyle(.secondary)
+                            }
                         }
-                        .foregroundStyle(.secondary)
                         Spacer()
                         VStack(alignment: .trailing) {
-                            Text(String(format: "%.2f CHF", meal.prices.student))
-                            Text(String(format: "%.2f CHF", meal.prices.staff))
-                            Text(String(format: "%.2f CHF", meal.prices.external))
+                            ForEach(viewModel.pricesText, id: \.0) { row in
+                                Text(row.1)
+                            }
                         }
-                        .font(.body)
                     }
                 }
                 .padding(.horizontal)
@@ -100,7 +92,7 @@ struct MealDetailView: View {
                 // Mensa location
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
-                    Text(meal.location)
+                    Text(viewModel.locationText)
                 }
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -111,7 +103,7 @@ struct MealDetailView: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Image(systemName: "clock")
-                            Text(openingHoursText)
+                            Text(viewModel.openingHoursText)
                         }
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -121,13 +113,13 @@ struct MealDetailView: View {
                     Spacer()
                     
                     VStack(alignment: .trailing) {
-                        Text(openingHoursStatus)
+                        Text(viewModel.openingHoursStatus)
                     }
                     .padding(.horizontal)
                 }
 
                 // Button to website
-                if let url = meal.websiteURL {
+                if let url = viewModel.websiteURL {
                     Link(destination: url) {
                         Text("Zur Webseite")
                             .font(.headline)
@@ -155,64 +147,21 @@ struct MealDetailView: View {
             }
         }
     }
-
-    private var imageNameExists: Bool {
-        meal.imageName != nil
-    }
-    
-    private var openingHoursText: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        
-        let start = formatter.string(from: meal.openingHours.start)
-        let end = formatter.string(from: meal.openingHours.end)
-        
-        return "\(start) - \(end) Uhr"
-    }
-    
-    private var openingHoursStatus: String {
-        let now = Date()
-        let openingHours = meal.openingHours
-        
-        if openingHours.contains(now) {
-            let timeRemaining = openingHours.end.timeIntervalSince(now)
-            if timeRemaining < 15 * 60 {
-                return "schließt bald"
-            } else {
-                return "geöffnet"
-            }
-        } else if now < openingHours.start {
-            let timeUntilOpen = openingHours.start.timeIntervalSince(now)
-            if timeUntilOpen < 15 * 60 {
-                return "öffnet bald"
-            } else {
-                return "geschlossen"
-            }
-        } else {
-            return "geschlossen"
-        }
-    }
 }
-
 
 #Preview {
     let calendar = Calendar.current
     let today = Date()
-
-    var startComponents = calendar.dateComponents([.year, .month, .day], from: today)
-    startComponents.hour = 14
-    startComponents.minute = 00
-
-    var endComponents = startComponents
-    endComponents.hour = 15
-    endComponents.minute = 00
-
-    let startDate = calendar.date(from: startComponents)!
-    let endDate = calendar.date(from: endComponents)!
-
-    let interval = DateInterval(start: startDate, end: endDate)
     
-    return MealDetailView(meal: Meal(
+    var start = calendar.dateComponents([.year, .month, .day], from: today)
+    start.hour = 14
+    let startDate = calendar.date(from: start)!
+    
+    var end = start
+    end.hour = 15
+    let endDate = calendar.date(from: end)!
+    
+    let meal = Meal(
         name: "Falafel Bowl",
         description: "Kichererbsen, Quinoa und frische Kräuter, serviert mit Tahini-Dressing.",
         nutrientProperties: [.vegan],
@@ -222,6 +171,9 @@ struct MealDetailView: View {
         location: "Uni Café",
         imageName: nil,
         websiteURL: URL(string: "https://www.mensa.unibas.ch"),
-        openingHours: interval
-    ))
+        openingHours: DateInterval(start: startDate, end: endDate)
+    )
+    
+    return MealDetailView(viewModel: MealDetailViewModel(meal: meal))
 }
+

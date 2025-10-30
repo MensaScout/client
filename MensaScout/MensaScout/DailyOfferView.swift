@@ -156,17 +156,17 @@ struct DailyOfferView: View {
         ScrollView {
             VStack(spacing: 20) {
                 ForEach(meals) { meal in
-                    MealCardView(meal: meal)
-                        .onTapGesture {
-                            selectedMeal = meal
-                        }
+                    MealCardView(viewModel: MealCardViewModel(meal: meal))
+                    .onTapGesture {
+                        selectedMeal = meal
+                    }
                 }
             }
             .padding(.vertical)
         }
         .navigationTitle("Tagesangebot")
         .sheet(item: $selectedMeal) { meal in
-            MealDetailView(meal: meal)
+            MealDetailView(viewModel: MealDetailViewModel(meal: meal))
         }
     }
 }
