@@ -52,7 +52,7 @@
         <relationship name="maintainerAssignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MaintainerAssignmentEntity" inverseName="maintainer" inverseEntity="MaintainerAssignmentEntity"/>
     </entity>
     <entity name="MealEntity" representedClassName="MealEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="categoryRaw" optional="YES" attributeType="String"/>
+        <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="externalId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="media" optional="YES" attributeType="String"/>
