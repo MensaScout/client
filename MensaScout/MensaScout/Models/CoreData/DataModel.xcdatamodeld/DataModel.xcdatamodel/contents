@@ -5,19 +5,16 @@
         <attribute name="addressLine2" optional="YES" attributeType="String"/>
         <attribute name="city" attributeType="String"/>
         <attribute name="country" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="zipCode" attributeType="String"/>
         <relationship name="canteenOperators" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="address" inverseEntity="CanteenOperatorEntity"/>
         <relationship name="canteens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="address" inverseEntity="CanteenEntity"/>
     </entity>
     <entity name="AllergenEntity" representedClassName="AllergenEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="allergens" inverseEntity="MealEntity"/>
     </entity>
     <entity name="CanteenEntity" representedClassName="CanteenEntity" syncable="YES" codeGenerationType="class">
         <attribute name="externalId" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteens" inverseEntity="AddressEntity"/>
         <relationship name="canteenOperator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="canteens" inverseEntity="CanteenOperatorEntity"/>
@@ -26,7 +23,6 @@
     </entity>
     <entity name="CanteenOperatorEntity" representedClassName="CanteenOperatorEntity" syncable="YES" codeGenerationType="class">
         <attribute name="externalId" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteenOperators" inverseEntity="AddressEntity"/>
         <relationship name="canteens" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CanteenEntity" inverseName="canteenOperator" inverseEntity="CanteenEntity"/>
@@ -35,7 +31,6 @@
     <entity name="IngredientOriginEntity" representedClassName="IngredientOriginEntity" syncable="YES" codeGenerationType="class">
         <attribute name="animal" attributeType="String"/>
         <attribute name="country" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="typeRaw" attributeType="String"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="ingredientOrigins" inverseEntity="MealEntity"/>
     </entity>
@@ -45,7 +40,6 @@
         <relationship name="maintainer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MaintainerEntity" inverseName="maintainerAssignments" inverseEntity="MaintainerEntity"/>
     </entity>
     <entity name="MaintainerEntity" representedClassName="MaintainerEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="linkToProfile" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
@@ -54,7 +48,6 @@
     <entity name="MealEntity" representedClassName="MealEntity" syncable="YES" codeGenerationType="class">
         <attribute name="category" attributeType="String"/>
         <attribute name="externalId" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="media" attributeType="String"/>
         <attribute name="offeredFrom" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="offeredTo" attributeType="Date" usesScalarValueType="NO"/>
@@ -66,14 +59,12 @@
     </entity>
     <entity name="NutrientPropertyEntity" representedClassName="NutrientPropertyEntity" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="typeRaw" attributeType="String"/>
         <attribute name="unitRaw" attributeType="String"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="nutrientProperties" inverseEntity="MealEntity"/>
     </entity>
     <entity name="OpeningPeriodEntity" representedClassName="OpeningPeriodEntity" syncable="YES" codeGenerationType="class">
         <attribute name="end" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="start" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="validFrom" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="validTo" attributeType="Date" usesScalarValueType="NO"/>
@@ -83,7 +74,6 @@
         <attribute name="amount" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="categoryRaw" attributeType="String"/>
         <attribute name="currency" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="prices" inverseEntity="MealEntity"/>
     </entity>
 </model>
