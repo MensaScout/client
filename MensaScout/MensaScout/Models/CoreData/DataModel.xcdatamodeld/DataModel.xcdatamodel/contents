@@ -6,44 +6,44 @@
         <attribute name="city" attributeType="String"/>
         <attribute name="country" attributeType="String"/>
         <attribute name="zipCode" attributeType="String"/>
-        <relationship name="canteenOperators" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="address" inverseEntity="CanteenOperatorEntity"/>
-        <relationship name="canteens" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="address" inverseEntity="CanteenEntity"/>
+        <relationship name="canteenOperators" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="address" inverseEntity="CanteenOperatorEntity"/>
+        <relationship name="canteens" toMany="YES" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="address" inverseEntity="CanteenEntity"/>
     </entity>
     <entity name="AllergenEntity" representedClassName="AllergenEntity" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
-        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="allergens" inverseEntity="MealEntity"/>
+        <relationship name="meal" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="allergens" inverseEntity="MealEntity"/>
     </entity>
     <entity name="CanteenEntity" representedClassName="CanteenEntity" syncable="YES" codeGenerationType="class">
         <attribute name="externalId" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteens" inverseEntity="AddressEntity"/>
-        <relationship name="canteenOperator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="canteens" inverseEntity="CanteenOperatorEntity"/>
-        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MealEntity" inverseName="canteen" inverseEntity="MealEntity"/>
-        <relationship name="openingPeriods" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="OpeningPeriodEntity" inverseName="canteen" inverseEntity="OpeningPeriodEntity"/>
+        <relationship name="address" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteens" inverseEntity="AddressEntity"/>
+        <relationship name="canteenOperator" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="canteens" inverseEntity="CanteenOperatorEntity"/>
+        <relationship name="meals" toMany="YES" deletionRule="Cascade" destinationEntity="MealEntity" inverseName="canteen" inverseEntity="MealEntity"/>
+        <relationship name="openingPeriods" toMany="YES" deletionRule="Cascade" destinationEntity="OpeningPeriodEntity" inverseName="canteen" inverseEntity="OpeningPeriodEntity"/>
     </entity>
     <entity name="CanteenOperatorEntity" representedClassName="CanteenOperatorEntity" syncable="YES" codeGenerationType="class">
         <attribute name="externalId" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteenOperators" inverseEntity="AddressEntity"/>
-        <relationship name="canteens" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CanteenEntity" inverseName="canteenOperator" inverseEntity="CanteenEntity"/>
-        <relationship name="maintainerAssignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MaintainerAssignmentEntity" inverseName="canteenOperator" inverseEntity="MaintainerAssignmentEntity"/>
+        <relationship name="address" maxCount="1" deletionRule="Nullify" destinationEntity="AddressEntity" inverseName="canteenOperators" inverseEntity="AddressEntity"/>
+        <relationship name="canteens" toMany="YES" deletionRule="Cascade" destinationEntity="CanteenEntity" inverseName="canteenOperator" inverseEntity="CanteenEntity"/>
+        <relationship name="maintainerAssignments" toMany="YES" deletionRule="Cascade" destinationEntity="MaintainerAssignmentEntity" inverseName="canteenOperator" inverseEntity="MaintainerAssignmentEntity"/>
     </entity>
     <entity name="IngredientOriginEntity" representedClassName="IngredientOriginEntity" syncable="YES" codeGenerationType="class">
         <attribute name="animal" attributeType="String"/>
         <attribute name="country" attributeType="String"/>
         <attribute name="typeRaw" attributeType="String"/>
-        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="ingredientOrigins" inverseEntity="MealEntity"/>
+        <relationship name="meal" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="ingredientOrigins" inverseEntity="MealEntity"/>
     </entity>
     <entity name="MaintainerAssignmentEntity" representedClassName="MaintainerAssignmentEntity" syncable="YES" codeGenerationType="class">
         <attribute name="role" attributeType="String"/>
-        <relationship name="canteenOperator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="maintainerAssignments" inverseEntity="CanteenOperatorEntity"/>
-        <relationship name="maintainer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MaintainerEntity" inverseName="maintainerAssignments" inverseEntity="MaintainerEntity"/>
+        <relationship name="canteenOperator" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenOperatorEntity" inverseName="maintainerAssignments" inverseEntity="CanteenOperatorEntity"/>
+        <relationship name="maintainer" maxCount="1" deletionRule="Nullify" destinationEntity="MaintainerEntity" inverseName="maintainerAssignments" inverseEntity="MaintainerEntity"/>
     </entity>
     <entity name="MaintainerEntity" representedClassName="MaintainerEntity" syncable="YES" codeGenerationType="class">
         <attribute name="linkToProfile" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="username" attributeType="String"/>
-        <relationship name="maintainerAssignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MaintainerAssignmentEntity" inverseName="maintainer" inverseEntity="MaintainerAssignmentEntity"/>
+        <relationship name="maintainerAssignments" toMany="YES" deletionRule="Cascade" destinationEntity="MaintainerAssignmentEntity" inverseName="maintainer" inverseEntity="MaintainerAssignmentEntity"/>
     </entity>
     <entity name="MealEntity" representedClassName="MealEntity" syncable="YES" codeGenerationType="class">
         <attribute name="category" attributeType="String"/>
@@ -51,29 +51,29 @@
         <attribute name="media" attributeType="String"/>
         <attribute name="offeredFrom" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="offeredTo" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="allergens" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AllergenEntity" inverseName="meal" inverseEntity="AllergenEntity"/>
-        <relationship name="canteen" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="meals" inverseEntity="CanteenEntity"/>
-        <relationship name="ingredientOrigins" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="IngredientOriginEntity" inverseName="meal" inverseEntity="IngredientOriginEntity"/>
-        <relationship name="nutrientProperties" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="NutrientPropertyEntity" inverseName="meal" inverseEntity="NutrientPropertyEntity"/>
-        <relationship name="prices" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PriceEntity" inverseName="meal" inverseEntity="PriceEntity"/>
+        <relationship name="allergens" toMany="YES" deletionRule="Cascade" destinationEntity="AllergenEntity" inverseName="meal" inverseEntity="AllergenEntity"/>
+        <relationship name="canteen" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="meals" inverseEntity="CanteenEntity"/>
+        <relationship name="ingredientOrigins" toMany="YES" deletionRule="Cascade" destinationEntity="IngredientOriginEntity" inverseName="meal" inverseEntity="IngredientOriginEntity"/>
+        <relationship name="nutrientProperties" toMany="YES" deletionRule="Cascade" destinationEntity="NutrientPropertyEntity" inverseName="meal" inverseEntity="NutrientPropertyEntity"/>
+        <relationship name="prices" toMany="YES" deletionRule="Cascade" destinationEntity="PriceEntity" inverseName="meal" inverseEntity="PriceEntity"/>
     </entity>
     <entity name="NutrientPropertyEntity" representedClassName="NutrientPropertyEntity" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="typeRaw" attributeType="String"/>
         <attribute name="unitRaw" attributeType="String"/>
-        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="nutrientProperties" inverseEntity="MealEntity"/>
+        <relationship name="meal" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="nutrientProperties" inverseEntity="MealEntity"/>
     </entity>
     <entity name="OpeningPeriodEntity" representedClassName="OpeningPeriodEntity" syncable="YES" codeGenerationType="class">
         <attribute name="end" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="start" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="validFrom" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="validTo" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="canteen" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="openingPeriods" inverseEntity="CanteenEntity"/>
+        <relationship name="canteen" maxCount="1" deletionRule="Nullify" destinationEntity="CanteenEntity" inverseName="openingPeriods" inverseEntity="CanteenEntity"/>
     </entity>
     <entity name="PriceEntity" representedClassName="PriceEntity" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="categoryRaw" attributeType="String"/>
         <attribute name="currency" attributeType="String"/>
-        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="prices" inverseEntity="MealEntity"/>
+        <relationship name="meal" maxCount="1" deletionRule="Nullify" destinationEntity="MealEntity" inverseName="prices" inverseEntity="MealEntity"/>
     </entity>
 </model>
