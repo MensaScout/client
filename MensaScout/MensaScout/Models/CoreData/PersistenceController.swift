@@ -16,7 +16,6 @@ struct PersistenceController {
         container = NSPersistentContainer(name: "MensaScoutModel")
 
         if inMemory {
-            // Speichert nur im RAM, nicht auf der Festplatte
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
 
