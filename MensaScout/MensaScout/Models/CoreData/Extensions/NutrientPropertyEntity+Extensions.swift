@@ -19,10 +19,10 @@ extension NutrientPropertyEntity {
     
     var unit: NutrientPropertyUnit? {
         get {
-            NutrientPropertyUnit(rawValue: typeRaw ?? "") ?? nil
+            NutrientPropertyUnit(rawValue: unitRaw ?? "") ?? nil
         }
         set {
-            typeRaw = newValue?.rawValue
+            unitRaw = newValue?.rawValue
         }
     }
 }
