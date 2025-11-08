@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum IngredientType: String, CaseIterable, Codable {
+enum IngredientOriginType: String, CaseIterable, Codable {
     case meat = "Meat"
     case fish = "Fish"
     case seafood = "Seafood"
