@@ -13,19 +13,46 @@ final class OpeningPeriodRepository {
         start: Date,
         end: Date,
         validFrom: Date,
-        validTo: Date,
+        validTo: Date?,
         canteen: CanteenEntity,
         context: NSManagedObjectContext
     ) -> OpeningPeriodEntity {
-        let openingPeriod = OpeningPeriodEntity(context: context)
-        openingPeriod.start = start
-        openingPeriod.end = end
-        openingPeriod.validFrom = validFrom
-        openingPeriod.validTo = validTo
+        let newPeriod = OpeningPeriodEntity(context: context)
+        newPeriod.start = start
+        newPeriod.end = end
+        newPeriod.validFrom = validFrom
+        newPeriod.validTo = validTo
+        newPeriod.canteen = canteen
         
-        openingPeriod.canteen = canteen
-        canteen.openingPeriods?.adding(openingPeriod)
+        if let previousPeriod = loadPreviousOpeningPeriod(
+            context: context,
+            canteen: canteen,
+            before: validFrom
+        ) {
+            previousPeriod.validTo = validFrom
+        }
         
-        return openingPeriod
+        return newPeriod
+    }
+    
+    static func loadPreviousOpeningPeriod(
+        context: NSManagedObjectContext,
+        canteen: CanteenEntity,
+        before date: Date
+    ) -> OpeningPeriodEntity? {
+        let request = OpeningPeriodEntity.fetchRequest()
+
+        request.predicate = NSPredicate(
+            format: "canteen == %@ AND validFrom < %@",
+            canteen, date as NSDate
+        )
+        
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "validFrom", ascending: false)
+        ]
+
+        request.fetchLimit = 1
+
+        return try? context.fetch(request).first
     }
 }
