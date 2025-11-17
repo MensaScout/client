@@ -29,4 +29,20 @@ final class MealRepository {
         
         return meal
     }
+    
+    static func fetchMealsForToday(
+        canteen: CanteenEntity,
+        context: NSManagedObjectContext
+    ) -> [MealEntity]? {
+        let request = MealEntity.fetchRequest()
+        
+        let today = Date()
+        request.predicate = NSPredicate(
+            format: "offeredFrom >= %@ AND offeredTo <= %@",
+            today.startOfDay as CVarArg,
+            today.endOfDay as CVarArg
+        )
+        
+        return try? context.fetch(request)
+    }
 }
